@@ -7,17 +7,17 @@ import {
   Paper,
   Typography,
 } from "@material-ui/core";
-import React from "react";
+import React, { useCallback, useState } from "react";
 import CloseIcon from "@material-ui/icons/Close";
 
-interface Persons {
+interface Person {
   name: string;
   age: number;
   task: string;
 }
 
 interface Props {
-  persons: Persons[];
+  person: Person;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -28,70 +28,59 @@ const useStyles = makeStyles((theme) => ({
   typography: {
     padding: theme.spacing(1),
   },
-  container: {
-    display: "grid",
-    gridTemplateColumns: "repeat(12, 1fr)",
-    gridGap: theme.spacing(3),
-  },
 }));
 
-function activateAlert() {
-  alert("Closed");
-}
+const ComponentPaper: React.FC<Props> = ({ person }) => {
+  const classes = useStyles();
+  const activateAlert = useCallback(() => {
+    alert("Closed");
+  }, []);
 
-function activateButton() {
-  console.log("Clicked");
-}
+  const activateButton = useCallback(() => {
+    console.log("Clicked");
+  }, []);
 
-const Message: React.FC<Props> = ({ persons }) => {
+  return (
+    <Paper className={classes.paper} variant="elevation" elevation={5}>
+      <Typography className={classes.typography} align="center" variant="body1">
+        <Grid container justifyContent="flex-end" alignItems="flex-end">
+          <IconButton onClick={activateAlert} size="small">
+            <CloseIcon />
+          </IconButton>
+        </Grid>
+        {person.name}
+      </Typography>
+
+      <Typography className={classes.typography} align="left" variant="body1">
+        Age: {person.age}
+      </Typography>
+
+      <Typography className={classes.typography} align="left" variant="body1">
+        Task: {person.task}
+      </Typography>
+      <Button onClick={activateButton} color="primary" variant="contained">
+        Test Button
+      </Button>
+    </Paper>
+  );
+};
+
+export default function Message() {
+  const [arr, setArr] = useState<Person[]>([
+    { name: "Rômulo", age: 21, task: "Estagiário" },
+    { name: "Aécio", age: 27, task: "Orientador" },
+    { name: "João", age: 30, task: "Orientador" },
+  ]);
   const classes = useStyles();
   return (
-    <Box m={5}>
-      <Grid container justifyContent="center" spacing={10} alignItems="center">
-        {persons.map((person) => (
-          <Grid xs={4} key={person.name} item>
-            <Paper className={classes.paper} variant="elevation" elevation={5}>
-              <Typography
-                className={classes.typography}
-                align="center"
-                variant="body1"
-              >
-                <Grid container justifyContent="flex-end" alignItems="flex-end">
-                  <IconButton onClick={activateAlert} size="small">
-                    <CloseIcon />
-                  </IconButton>
-                </Grid>
-                {person.name}
-              </Typography>
-
-              <Typography
-                className={classes.typography}
-                align="left"
-                variant="body1"
-              >
-                Age: {person.age}
-              </Typography>
-
-              <Typography
-                className={classes.typography}
-                align="left"
-                variant="body1"
-              >
-                Task: {person.task}
-              </Typography>
-              <Button
-                onClick={activateButton}
-                color="primary"
-                variant="contained"
-              >
-                Test Button
-              </Button>
-            </Paper>
+    <Box m={5} p={4}>
+      <Grid container justifyContent="center" spacing={4} alignItems="center">
+        {arr.map((person, index) => (
+          <Grid xs={4} key={index} item>
+            <ComponentPaper key={index} person={person} />
           </Grid>
         ))}
       </Grid>
     </Box>
   );
-};
-
-export default Message;
+}
