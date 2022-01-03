@@ -47,9 +47,9 @@ const Message: React.FC<Props> = ({ persons }) => {
   const classes = useStyles();
   return (
     <Box m={5}>
-      <Grid container justifyContent="center" alignItems="center">
-        <Grid xs={4} item>
-          {persons.map((person) => (
+      <Grid container justifyContent="center" spacing={10} alignItems="center">
+        {persons.map((person) => (
+          <Grid xs={4} key={person.name} item>
             <Paper className={classes.paper} variant="elevation" elevation={5}>
               <Typography
                 className={classes.typography}
@@ -87,8 +87,8 @@ const Message: React.FC<Props> = ({ persons }) => {
                 Test Button
               </Button>
             </Paper>
-          ))}
-        </Grid>
+          </Grid>
+        ))}
       </Grid>
     </Box>
   );

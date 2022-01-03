@@ -10,14 +10,14 @@ import ConditionalRendering from "./components/ConditionalRendering";
 function App() {
   return (
     <Box>
-      <ConditionalRendering />
-      {/* <StringsArray
+      {/* <ConditionalRendering /> */}
+      <StringsArray
         persons={[{ name: "Rômulo", age: 21, task: "Estagiário" }]}
       />
       <StringsArray
         persons={[{ name: "Aécio", age: 30, task: "Orientador" }]}
       />
-      <StringsArray persons={[{ name: "João", age: 31, task: "Orientador" }]} /> */}
+      <StringsArray persons={[{ name: "João", age: 31, task: "Orientador" }]} />
 
       {/* <TestingProps name={"Rômulo"} age={21} task={"Estagiário"} />
       <TestingProps name={"Aécio"} age={30} task={"Orientador"} />
